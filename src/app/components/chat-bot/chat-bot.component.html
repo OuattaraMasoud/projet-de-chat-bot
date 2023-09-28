@@ -1,86 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
 
-<!-- Top navigation -->
-<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-sm-3 col-md-2 mr-0">
+.chat-container {
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
 
-  </a>
-</nav>
-<div class="container-fluid">
-  <div class="row">
+.chat-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
 
-    <nav class="col-md-2 d-md-block bg-light sidebar">
-      <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/dashboard">
-              <i class="fas fa-user"></i>Profil d'utilisateur
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" routerLink="/chat-bot">
-              <i class="fas fa-comment"></i>Chat bot
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " routerLink="/edit-profile">
-              <i class="fas fa-edit"></i>Mise à jour du profil
-            </a>
-          </li>
-          <!-- Calling SignOut() Api from AuthService -->
-          <li class="nav-item">
-            <a class="nav-link" (click)="authService.SignOut()">
-              <i class="fas fa-sign-out-alt"></i>Se déconnecter
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-      <!-- Contenu de la page de chatbot -->
-      <div class="inner-adjust">
-        <div class="pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Chat bot</h1>
+.chat-messages {
+    padding: 10px;
+    overflow-y: scroll;
+    max-height: 300px;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-message .message-content {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    align-self: flex-end;
+}
+
+.assistant-message .message-content {
+    background-color: #ccc;
+    color: #333;
+    border-radius: 5px;
+    padding: 5px 10px;
+    align-self: flex-start;
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+.chat-input button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0">
+
+    </a>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-md-2 d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard">
+
+                <i class="fas fa-user"></i>Profil d'utilisateur
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/chat-bot">
+                <i class="fas fa-comment"></i>Chat bot
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " routerLink="/chat-bot-history">
+                <i class="fas fa-history"></i>Historique
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " routerLink="/edit-profile">
+                <i class="fas fa-edit"></i>Mise à jour du profil
+              </a>
+            </li>
+            <!-- Calling SignOut() Api from AuthService -->
+            <li class="nav-item">
+              <a class="nav-link" (click)="authService.SignOut()">
+                <i class="fas fa-sign-out-alt"></i>Se déconnecter
+              </a>
+            </li>
+          </ul>
         </div>
-        <!-- Zone de chat bot -->
-        <div class="card">
-          <div class="card-body">
-            <!-- Affichage des messages -->
-
-            <!-- Saisie de message -->
-            <div class="p-3">
-              <div class="card">
-                  <div class="card-body">
-                    <div *ngIf="messages.concat(responses).length > 0">
-
-                      <div class="list-group">
-                        <ng-container *ngFor="let message of messages.concat(responses); let i = index">
-                          <div [ngClass]="{'alert alert-danger': message.role === 'user', 'alert alert-success': message.role === 'bot'}" class="mb-3">
-                            <h6 class="mb-1">{{ message.role === 'bot' ? 'Réponse du Chat Bot' : 'Votre Message' }}</h6>
-                            <p class="mb-1">{{ message.content }}</p>
-                          </div>
-                        </ng-container>
-                      </div>
-                    </div>
-
-
-
-
-                      <form [formGroup]="queryFormGroup" (ngSubmit)="handleValider()">
-                          <div class="mb-3">
-                              <label class="form-label">Message:</label>
-                              <textarea formControlName="query" class="form-control"></textarea>
-                          </div>
-                          <button class="btn btn-primary">Envoyer</button>
-                      </form>
-
-
-                  </div>
-              </div>
-          </div>
-          </div>
-        </div>
+      </nav>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+  <div class="pt-3">
+    <div class="chat-container">
+      <div class="chat-header">
+          <h1>Chat en direct</h1>
       </div>
-    </main>
+
+      <div class="chat-messages">
+          <div *ngFor="let message of messages" [ngClass]="{'message': true, 'user-message': message.role === 'user', 'assistant-message': message.role === 'assistant'}">
+              <div class="message-content">{{ message.content }}</div>
+          </div>
+      </div>
+
+      <div class="chat-input">
+          <form [formGroup]="queryFormGroup" (ngSubmit)="handleValider()">
+              <input type="text" placeholder="Écrivez un message..." formControlName="query" >
+              <button type="submit">Envoyer</button>
+          </form>
+      </div>
 
   </div>
-</div>
+  </div>
+</main>
+    </div>
+  </div>
+</body>
+</html>

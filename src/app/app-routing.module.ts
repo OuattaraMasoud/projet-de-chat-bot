@@ -10,6 +10,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 // route guard
 import { AuthGuard } from './shared/guard/auth.guard';
 import { EditProfilComponent } from './components/edit-profil/edit-profil.component';
+import { ChatHistoryComponent } from './components/chat-history/chat-history.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'edit-profile', component: EditProfilComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
   { path: 'chat-bot', component: ChatBotComponent },
+  { path: 'chat-bot-history', component: ChatHistoryComponent },
 ];
 
 @NgModule({

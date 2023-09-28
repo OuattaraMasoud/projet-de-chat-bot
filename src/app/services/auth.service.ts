@@ -133,6 +133,11 @@ export class AuthService {
     });
   }
 
+  // saveConversation(conversation: any[]) {
+  //   const conversationsRef = this.db.list('conversations');
+  //   conversationsRef.push(conversation);
+  // }
+
   // Sign out
   SignOut() {
     return this.afAuth.signOut().then(() => {
