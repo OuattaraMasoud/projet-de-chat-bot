@@ -26,29 +26,27 @@ export class ChatBotComponent implements OnInit {
   }
 
   handleValider() {
-    let url = "https://api.openai.com/v1/chat/completions";
-    let httpHeaders = new HttpHeaders().set("Authorization", "Bearer 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");
-
+    let url ="https://api.openai.com/v1/chat/completions";
+    let httpHeaders=new HttpHeaders().set("Authorization", "Bearer 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");
     this.messages.push({
-      role: 'user', content: this.queryFormGroup.value.query
-    });
+      role:'user', content:this.queryFormGroup.value.query
+    })
 
-    let payload = {
-      model: "gpt-3.5-turbo",
-      messages: this.messages
-    };
+    let payload={
+      model :"gpt-3.5-turbo",
+      messages : this.messages
+    }
+    this.httpClient.post(url,payload,{headers: httpHeaders})
+      .subscribe({next :(resp)=>{
+        this.result=resp;
 
-    this.httpClient.post(url, payload, { headers: httpHeaders })
-      .subscribe({
-        next: (resp) => {
-          this.result = resp;
-          this.responses.push({
-            role: 'bot',
-            content: this.result.choices[0].message.content
-          });
+        this.result.choices.forEach((choice:any) => {
+          this.messages.push({
+            role:'assistant', content : choice.message.content
+          })
+        });
 
-          // Effacer le champ de saisie après envoi
-          this.queryFormGroup.get('query')?.reset();
+
       },
       error:(err)=>{
 

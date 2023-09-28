@@ -26,6 +26,7 @@ import { ChatService } from './shared/services/server.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditProfilComponent } from './components/edit-profil/edit-profil.component';
+import { ChatHistoryComponent } from './components/chat-history/chat-history.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { EditProfilComponent } from './components/edit-profil/edit-profil.compon
     VerifyEmailComponent,
     ChatBotComponent,
     EditProfilComponent,
+    ChatHistoryComponent,
   ],
   imports: [
     BrowserModule,

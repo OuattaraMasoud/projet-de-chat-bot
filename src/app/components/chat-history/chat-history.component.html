@@ -1,10 +1,10 @@
+
 <!-- Top navigation -->
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0">
+
   </a>
 </nav>
-
-<!-- Sidebar navigation -->
 <div class="container-fluid">
   <div class="row">
 
@@ -12,7 +12,7 @@
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active">
+            <a class="nav-link" routerLink="/dashboard">
               <i class="fas fa-user"></i>Profil d'utilisateur
             </a>
           </li>
@@ -22,7 +22,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " routerLink="/chat-bot-history">
+            <a class="nav-link active" routerLink="/chat-bot-history">
               <i class="fas fa-history"></i>Historique
             </a>
           </li>
@@ -40,31 +40,3 @@
         </ul>
       </div>
     </nav>
-
-    <!-- Main content -->
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-      <div class="inner-adjust">
-
-        <div class="pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Mon profil</h1>
-        </div>
-        <!-- Show user data when logged in -->
-        <div class="row" *ngIf="authService.userData as user">
-          <div class="col-md-12">
-            <div class="media">
-
-              <div class="media-body">
-                <h1>Bienvenue: <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong></h1>
-                <p>Id d'utilisateur: <strong>{{user.uid}}</strong></p>
-                <p>Email: <strong>{{user.email}}</strong></p>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </main>
-
-  </div>
-</div>
