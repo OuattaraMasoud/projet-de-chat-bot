@@ -1,0 +1,85 @@
+<!-- Top navigation -->
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0">
+  </a>
+</nav>
+
+<!-- Sidebar navigation -->
+<div class="container-fluid">
+  <div class="row">
+
+    <nav class="col-md-2 d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard">
+              <i class="fas fa-user"></i>Profil d'utilisateur
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/chat-bot">
+              <i class="fas fa-comment"></i>Chat bot
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/edit-profile">
+              <i class="fas fa-edit"></i>Mise à jour du profil
+            </a>
+          </li>
+          <!-- Calling SignOut() Api from AuthService -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="authService.SignOut()">
+              <i class="fas fa-sign-out-alt"></i>Se déconnecter
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+  <div class="inner-adjust">
+    <div class="pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Mise à jour du profil</h1>
+    </div>
+
+    <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+      Profil mis à jour avec succès.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="updateSuccess = false">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Show user data when logged in -->
+    <div class="row" *ngIf="authService.userData as user">
+      <div class="col-md-12">
+        <div class="media">
+
+          <div class="media-body">
+            <h1> <strong>{{(user.displayName) ? user.displayName : 'Utilisateur'}}</strong></h1>
+            <p>Id d'utilisateur: <strong>{{user.uid}}</strong></p>
+            <p>Email: <strong>{{user.email}}</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire de mise à jour du profil -->
+    <div class="row" *ngIf="authService.userData as user">
+      <div class="col-md-12">
+        <form (ngSubmit)="updateProfile()" #profileForm="ngForm">
+          <div class="form-group">
+            <label for="displayName">Nom et prénoms</label>
+            <input type="text" class="form-control" id="displayName" name="displayName"
+              [(ngModel)]="newDisplayName" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Mettre à jour le profil</button>
+        </form>
+      </div>
+    </div>
+
+
+  </div>
+</main>
+
