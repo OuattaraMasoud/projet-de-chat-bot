@@ -1,0 +1,86 @@
+
+<!-- Top navigation -->
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0">
+
+  </a>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+
+    <nav class="col-md-2 d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard">
+              <i class="fas fa-user"></i>Profil d'utilisateur
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/chat-bot">
+              <i class="fas fa-comment"></i>Chat bot
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " routerLink="/edit-profile">
+              <i class="fas fa-edit"></i>Mise à jour du profil
+            </a>
+          </li>
+          <!-- Calling SignOut() Api from AuthService -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="authService.SignOut()">
+              <i class="fas fa-sign-out-alt"></i>Se déconnecter
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <!-- Contenu de la page de chatbot -->
+      <div class="inner-adjust">
+        <div class="pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Chat bot</h1>
+        </div>
+        <!-- Zone de chat bot -->
+        <div class="card">
+          <div class="card-body">
+            <!-- Affichage des messages -->
+
+            <!-- Saisie de message -->
+            <div class="p-3">
+              <div class="card">
+                  <div class="card-body">
+                    <div *ngIf="messages.concat(responses).length > 0">
+
+                      <div class="list-group">
+                        <ng-container *ngFor="let message of messages.concat(responses); let i = index">
+                          <div [ngClass]="{'alert alert-danger': message.role === 'user', 'alert alert-success': message.role === 'bot'}" class="mb-3">
+                            <h6 class="mb-1">{{ message.role === 'bot' ? 'Réponse du Chat Bot' : 'Votre Message' }}</h6>
+                            <p class="mb-1">{{ message.content }}</p>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+
+
+
+
+                      <form [formGroup]="queryFormGroup" (ngSubmit)="handleValider()">
+                          <div class="mb-3">
+                              <label class="form-label">Message:</label>
+                              <textarea formControlName="query" class="form-control"></textarea>
+                          </div>
+                          <button class="btn btn-primary">Envoyer</button>
+                      </form>
+
+
+                  </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
